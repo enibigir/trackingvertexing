@@ -62,7 +62,7 @@ for i, event in enumerate(events):
 The first three lines load the `FWLite` framework, the `.root` data file, and prepare a `Handle` for the track collection using its full C++ name (`std::vector`). In each event, we load the tracks labeled `generalTracks` and loop over them, printing out the **five basic track variables** for each. The C++ equivalent of this is hidden below (longer and more difficult to write and compile, but faster to execute on large datasets) and is optional for this entire short exercise.
 
 > ## C++ version
-> First generate a template (also refered to as a skeleton) for analyzing an AOD root file with CMSSW with `#!bash mkedanlzr`
+> First generate a template (also referred to as a skeleton) for analyzing an AOD root file with CMSSW with `#!bash mkedanlzr`
 > ~~~
 > cd ${CMSSW_BASE}/src
 > mkedanlzr PrintOutTracks
@@ -73,6 +73,7 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > tree PrintOutTracks
 > ~~~
 > <details><summary> output </summary>
+> 
 > ~~~
 > PrintOutTracks
 > |-- plugins
@@ -88,9 +89,10 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > 
 > 3 directories, 7 files
 > ~~~
+> 
 > </details>
 >
-> Now, you may edit the template files to perform operations on the event data and produce output such as histogramed data or printing to the diagnostic information to screen.
+> Now, you may edit the template files to perform operations on the event data and produce output -  such as histograms or print outs of diagnostic information to screen.
 > ( To edit the files you may use your favorite text editor e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
 >
 > <details><summary> if compilation fails, the following lines may need to be added: </summary>
@@ -106,6 +108,7 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > #include "DataFormats/TrackReco/interface/TrackFwd.h"
 > #include "FWCore/Utilities/interface/InputTag.h"
 > ~~~
+> 
 > </details>
 >
 > Inside the `PrintOutTracks` class definition (one line below the member data comment, before the `};`), replace `edm::EDGetTokenT<TrackCollection> tracksToken_;` with:

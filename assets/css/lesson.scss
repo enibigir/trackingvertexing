@@ -24,6 +24,7 @@ $color-keypoints:   #7ae78e !default;
 $color-objectives:  #daee84 !default;
 $color-prereq:      #9cd6dc !default;
 $color-solution:    #ded4b9 !default;
+$color-solution2:    #ded4b9 !default;
 $color-testimonial: #fc8dc1 !default;
 
 //----------------------------------------
@@ -184,6 +185,7 @@ $codeblock-padding: 0.325em !default;
 .objectives{ @include bkSetup($color-objectives, "\e085"); }
 .prereq{ @include bkSetup($color-prereq, "\e124"); }
 .solution{ @include bkSetup($color-solution, "\e105"); }
+.solution2{ @include bkSetup($color-solution2, "\e105"); }
 .testimonial{ @include bkSetup($color-testimonial, "\e143"); }
 
 .callout h3,
@@ -194,6 +196,7 @@ $codeblock-padding: 0.325em !default;
 .objectives h3,
 .prereq h3,
 .solution h3,
+.solution2 h4,
 .testimonial h3 {
 font-size: 1.17em;
 }
@@ -207,6 +210,7 @@ font-size: 1.17em;
 .objectives   { background-color: #daee8420; }
 .prereq       { background-color: #9cd6dc20; }
 .solution     { background-color: #ded4b94d; }
+.solution2     { background-color: #ded4b94d; }
 .testimonial  { background-color: #fc8dc120; }
 
 blockquote p {
@@ -325,7 +329,7 @@ span.fold-unfold {
   Force a pixelated rendering of images when original resolution is bigger than
   the <img> viewport to avoid a blurring effect that makes it difficult to read the image.
   This issue affects primarily Chrome based browsers (as of 2021).
-  See https://github.com/carpentries/styles/pull/636 for the original report and related links 
+  See https://github.com/carpentries/styles/pull/636 for the original report and related links
 */
 img {
   image-rendering: pixelated;
@@ -405,6 +409,9 @@ kbd {
 
 @media print {
   blockquote.solution > * {
+    display: unset !important;
+  }
+  blockquote.solution2 > * {
     display: unset !important;
   }
 }

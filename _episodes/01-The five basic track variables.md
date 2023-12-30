@@ -49,7 +49,10 @@ for i, event in enumerate(events):
     if i >= 5: break # print info only about the first 5 events
     print "Event", i
     event.getByLabel("generalTracks", tracks)
+    numTotal = tracks.product().size()
+    print "total tracks: ", numTotal
     for j, track in enumerate(tracks.product()):
+        if j >= 5: break # print info only about the first 5 tracks
         print "    Track", j,
         print "\t charge/pT: %.3f" %(track.charge()/track.pt()),
         print "\t phi: %.3f" %track.phi(),
@@ -58,13 +61,14 @@ for i, event in enumerate(events):
         print "\t dz: %.4f"  %track.dz()
 ~~~
 {: .language-python}
+to print all tracks comment out the line: `if j >= 5: break` as `# if j >= 5: break`
 
 The first three lines load the `FWLite` framework, the `.root` data file, and prepare a `Handle` for the track collection using its full C++ name (`std::vector`). In each event, we load the tracks labeled `generalTracks` and loop over them, printing out the **five basic track variables** for each. The C++ equivalent of this is hidden below (longer and more difficult to write and compile, but faster to execute on large datasets) and is optional for this entire short exercise.
 
 > ## C++ version
-> First generate a template (also referred to as a skeleton) for analyzing an AOD root file with CMSSW with `#!bash mkedanlzr`
+> First generate a template (also referred to as a skeleton) for analyzing an AOD root file with CMSSW with `mkedanlzr`. Make the template inside the `TrackingShortExercize/` directory:
 > ~~~
-> cd ${CMSSW_BASE}/src
+> cd ${CMSSW_BASE}/src/TrackingShortExercize
 > mkedanlzr PrintOutTracks
 > ~~~
 > {: .language-bash}
@@ -72,9 +76,9 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > ~~~bash
 > tree PrintOutTracks
 > ~~~
-> > ### output
-> > 
-> > ~~~
+> 
+> > ### output of the tree command
+> > ~~~output
 > > PrintOutTracks
 > > |-- plugins
 > > |   |-- BuildFile.xml
@@ -89,24 +93,10 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > > 
 > > 3 directories, 7 files
 > > ~~~
-> > 
+> {: .solution2}
+>
 > Now, you may edit the template files to perform operations on the event data and produce output -  such as histograms or print outs of diagnostic information to screen.
 > ( To edit the files you may use your favorite text editor e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
->
-> > ### if compilation fails, the following lines may need to be added:
-> > 
-> > at the top of `PrintOutTracks/plugins/BuildFile.xml`
-> > ~~~cpp
-> > <use name="DataFormats/TrackReco"/>
-> > ~~~
-> > and in `PrintOutTracks/plugins/PrintOutTracks.cc` the following in the `#include` section:
-> > ~~~cpp
-> > #include <iostream>
-> > #include "DataFormats/TrackReco/interface/Track.h"
-> > #include "DataFormats/TrackReco/interface/TrackFwd.h"
-> > #include "FWCore/Utilities/interface/InputTag.h"
-> > ~~~
-> > 
 >
 > Inside the `PrintOutTracks` class definition (one line below the member data comment, before the `};`), replace `edm::EDGetTokenT<TrackCollection> tracksToken_;` with:
 > ~~~
@@ -127,24 +117,24 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > {: .language-cpp}
 > Put the following inside the `PrintOutTracks::analyze` method:
 > ~~~
->   std::cout << "Event " << indexEvent_ << std::endl;
->
->   edm::Handle<edm::View<reco::Track> > trackHandle;
->   iEvent.getByToken(tracksToken_, trackHandle);
->   if ( !trackHandle.isValid() ) return;
->   const edm::View<reco::Track>& tracks = *trackHandle;
->   size_t iTrack = 0;
->   for ( auto track : tracks ) {
->     std::cout << "    Track " << iTrack << " "
->        << track.charge()/track.pt() << " "
->               << track.phi() << " "
->               << track.eta() << " "
->               << track.dxy() << " "
->               << track.dz()
->        << std::endl;
->     iTrack++;
->   }
->   ++indexEvent_;
+> printf("Event %i\n", indexEvent_);
+>  edm::Handle<edm::View<reco::Track> > trackHandle;
+> iEvent.getByToken(tracksToken_, trackHandle);
+> if ( !trackHandle.isValid() ) return;
+> const edm::View<reco::Track>& tracks = *trackHandle;
+> size_t iTrack = 0;
+> for ( auto track : tracks ) {
+>    if(iTrack>=5){ iTrack++; continue;}
+>   printf( "    Track %zu", iTrack);
+>   printf( "\t charge/pT: %.3f", (track.charge()/track.pt()));
+>   printf( "\t phi: %.3f", track.phi());
+>   printf( "\t eta: %.3f", track.eta());
+>   printf( "\t dxy: %.4f", track.dxy());
+>   printf( "\t dz: %.4f\n" , track.dz());
+>   iTrack++;
+> }
+> std::cout<<"total tracks: "<< iTrack<<std::endl;
+> ++indexEvent_;
 > ~~~
 > {: .language-cpp}
 > Now compile it by running:
@@ -152,6 +142,21 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > scram build -j 4
 > ~~~
 > {: .language-bash}
+>
+> > ### if compilation fails, the following lines may need to be added:
+> > at the top of `PrintOutTracks/plugins/BuildFile.xml`
+> > ~~~cpp
+> > <use name="DataFormats/TrackReco"/>
+> > ~~~
+> > and in `PrintOutTracks/plugins/PrintOutTracks.cc` the following in the `#include` section:
+> > ~~~cpp
+> > #include <iostream>
+> > #include "DataFormats/TrackReco/interface/Track.h"
+> > #include "DataFormats/TrackReco/interface/TrackFwd.h"
+> > #include "FWCore/Utilities/interface/InputTag.h"
+> > ~~~
+> {: .solution2}
+>
 > Go back to `TrackingShortExercize/` and create a CMSSW configuration file named `run_cfg.py` (`emacs -nw run_cfg.py`):
 > ~~~
 > import FWCore.ParameterSet.Config as cms
@@ -159,7 +164,7 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > process = cms.Process("RUN")
 > 
 > process.source = cms.Source("PoolSource",
->     fileNames = cms.untracked.vstring("file:/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root"))
+>     fileNames = cms.untracked.vstring("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root"))
 > process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(5))
 > 
 > process.MessageLogger = cms.Service("MessageLogger",
@@ -180,8 +185,8 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > This will produce the same output as the Python script, but it can be used on huge datasets. Though the language is different, notice that C++ and  `FWLite` use the same names for member functions: `charge()`, `pt()`, `phi()`, `eta()`, `dxy()`, and `dz()`.
 > That is intentional: you can learn what kinds of data are available with interactive  `FWLite ` and then use the same access methods when writing GRID jobs. There is another way to access `FWLite` with ROOT's C++-like syntax.
 >
-> The plugin is here: `/eos/user/c/cmsdas/2023/short-ex-trk/MyDirectory/PrintOutTracks/plugins/PrintOutTracks.cc`
-> The `run_cfg.py` is here: `/eos/user/c/cmsdas/2023/short-ex-trk/MyDirectory/PrintOutTracks/test/run_cfg.py`
+> The plugin is here: `/eos/user/c/cmsdas/2024/short-ex-trk/MyDirectory/PrintOutTracks/plugins/PrintOutTracks.cc`
+> The `run_cfg.py` is here: `/eos/user/c/cmsdas/2024/short-ex-trk/MyDirectory/PrintOutTracks/test/run_cfg.py`
 {: .solution}
 
 ## Track quality variables
@@ -202,11 +207,11 @@ Some of these standard selections have been encoded into a **quality flag** with
 **Plot of Backgrounds vs p<sub>T</sub>:**
 <a href="https://raw.githubusercontent.com/CMSTrackingPOG/trackingvertexing/gh-pages/data/ttbar_phase1_ca_vs_pu_fakerate_pt.png"><img src = "https://raw.githubusercontent.com/CMSTrackingPOG/trackingvertexing/gh-pages/data/ttbar_phase1_ca_vs_pu_fakerate_pt.png" alt="Backgrounds vs pT" width ="500"></a>
 
-Update the (create a new) `print.py` file with the following lines:
+Create a new `print.py` (with a unique name like `printMVA.py`) file with the following lines:
 Add a `Handle` to the MVA values:
 ~~~
 import DataFormats.FWLite as fwlite
-events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
+events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 tracks = fwlite.Handle("std::vector<reco::Track>")
 MVAs = fwlite.Handle("std::vector<float>")
 ~~~
@@ -230,6 +235,7 @@ for i, event in enumerate(events):
         if track.quality(track.qualityByName("tight")):      numTight      += 1
         if track.quality(track.qualityByName("highPurity")): numHighPurity += 1
 
+        if j<50 or 55<j: continue
         print "    Track", j,
         print "\t charge/pT: %.3f" %(track.charge()/track.pt()),
         print "\t phi: %.3f" %track.phi(),
@@ -240,13 +246,19 @@ for i, event in enumerate(events):
         print "\t algo: %s"  %track.algoName(),
         print "\t mva: %.3f" %mva
 
-    print "Event", i,   
+    print "Event", i,
     print "numTotal:", numTotal,
     print "numLoose:", numLoose, "(%.1f %%)"%(float(numLoose)/numTotal*100),
-    print "numTight:", numTight, "(%.1f %%)"%(float(numTight)/numTotal*100),  
+    print "numTight:", numTight, "(%.1f %%)"%(float(numTight)/numTotal*100),
     print "numHighPurity:", numHighPurity, "(%.1f %%)"%(float(numHighPurity)/numTotal*100)
+
+print("total events: ", dir(events))
+print("total events: ", type(events))
+print("total events: ", events.size())
 ~~~
 {: .language-python}
+to print all tracks comment out this line: `if j<50 or 55<j: continue` as `# if j<50 or 55<j: continue`
+
 The C++-equivalent is hidden below.
 > ## C++ version
 > Update your `EDAnalyzer` adding the following lines:

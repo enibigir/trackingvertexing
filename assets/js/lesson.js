@@ -18,6 +18,21 @@ $(".solution").each(function() {
     h2.append("<span class='fold-unfold glyphicon glyphicon-collapse-down'></span>");
 });
 
+// Handle foldable challenges and solution2s (on click and at start).
+$(".solution2").click(function(event) {
+    var trigger = $(event.target).has(".fold-unfold").length > 0
+               || $(event.target).filter(".fold-unfold").length > 0;
+    if (trigger) {
+        $(">*:not(h3)", this).toggle(400);
+        $(">h3>span.fold-unfold", this).toggleClass("glyphicon-collapse-down glyphicon-collapse-up");
+        event.stopPropagation();
+    }
+});
+$(".solution2").each(function() {
+    $(">*:not(h3)", this).toggle();
+    var h3 = $("h3:first", this);
+    h3.append("<span class='fold-unfold glyphicon glyphicon-collapse-down'></span>");
+});
 
 // Handle searches.
 // Relies on document having 'meta' element with name 'search-domain'.

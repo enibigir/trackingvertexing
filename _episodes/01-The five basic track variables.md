@@ -42,7 +42,7 @@ The exact definitions are given in the `reco::TrackBase` [header file](https://g
 Create `print.py` (for example `emacs -nw print.py`, or use your favorite text editor) in `TrackingShortExercize/`, then copy-paste the following code and run it (`python print.py`). Please note, if your `run321457_ZeroBias_AOD.root` is not in the directory you're working from, be sure to use the appropriate path in `line 2`.
 ~~~
 import DataFormats.FWLite as fwlite
-events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
+events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 tracks = fwlite.Handle("std::vector<reco::Track>")
 
 for i, event in enumerate(events):
@@ -56,28 +56,48 @@ for i, event in enumerate(events):
         print "\t eta: %.3f" %track.eta(),
         print "\t dxy: %.4f" %track.dxy(),
         print "\t dz: %.4f"  %track.dz()
-
 ~~~
 {: .language-python}
 
 The first three lines load the `FWLite` framework, the `.root` data file, and prepare a `Handle` for the track collection using its full C++ name (`std::vector`). In each event, we load the tracks labeled `generalTracks` and loop over them, printing out the **five basic track variables** for each. The C++ equivalent of this is hidden below (longer and more difficult to write and compile, but faster to execute on large datasets) and is optional for this entire short exercise.
 
 > ## C++ version
+> First generate a template (also refered to as a skeleton) for analyzing an AOD root file with CMSSW with `#!bash mkedanlzr`
 > ~~~
 > cd ${CMSSW_BASE}/src
-> mkdir MyDirectory
-> cd MyDirectory
 > mkedanlzr PrintOutTracks
-> cd ..
 > ~~~
 > {: .language-bash}
-> Use your favorite editor to add (if missing) the following line at the top of `MyDirectory/PrintOutTracks/plugins/BuildFile.xml`
-> (e.g. `emacs -nw MyDirectory/PrintOutTracks/plugins/BuildFile.xml`):
+> You may see the files and directories that were produced with  `#!bash mkedanlzr` by running:
+> ~~~bash
+> tree PrintOutTracks
+> ~~~
+> <details><summary> output </summary>
+> PrintOutTracks
+> |-- plugins
+> |   |-- BuildFile.xml
+> |   `-- PrintOutTracks.cc
+> |-- python
+> |   |-- __init__.py
+> |   `-- __init__.pyc
+> `-- test
+>     |-- BuildFile.xml
+>     |-- test_catch2_PrintOutTracks.cc
+>     `-- test_catch2_main.cc
+> 
+> 3 directories, 7 files
+> </details>
+>
+> Now, you may edit the template files (with your favorite editor) to perform operations on the event data (to produce output such as printing to the screen or histograms).
+> (e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
+>
+> <details><summary> if compilation fails, the following lines may need to be added: </summary>
+> at the top of `PrintOutTracks/plugins/BuildFile.xml`
 > ~~~
 > <use name="DataFormats/TrackReco"/>
 > ~~~
 > {: .language-cpp}
-> Now edit `MyDirectory/PrintOutTracks/plugins/PrintOutTracks.cc` and put (if missing) the following in the `#include` section:
+> and in `PrintOutTracks/plugins/PrintOutTracks.cc` the following in the `#include` section:
 > ~~~
 > #include <iostream>
 > #include "DataFormats/TrackReco/interface/Track.h"
@@ -85,6 +105,7 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > #include "FWCore/Utilities/interface/InputTag.h"
 > ~~~
 > {: .language-cpp}
+> </details>
 > Inside the `PrintOutTracks` class definition (one line below the member data comment, before the `};`), replace `edm::EDGetTokenT<TrackCollection> tracksToken_;` with:
 > ~~~
 > edm::EDGetTokenT<edm::View<reco::Track> > tracksToken_;  //used to select which tracks to read from configuration file

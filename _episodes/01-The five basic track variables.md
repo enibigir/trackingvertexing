@@ -72,44 +72,41 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > ~~~bash
 > tree PrintOutTracks
 > ~~~
-> <details><summary> output </summary>
-> 
-> ~~~
-> PrintOutTracks
-> |-- plugins
-> |   |-- BuildFile.xml
-> |   `-- PrintOutTracks.cc
-> |-- python
-> |   |-- __init__.py
-> |   `-- __init__.pyc
-> `-- test
->     |-- BuildFile.xml
->     |-- test_catch2_PrintOutTracks.cc
->     `-- test_catch2_main.cc
-> 
-> 3 directories, 7 files
-> ~~~
-> 
-> </details>
->
+> > output
+> > 
+> > ~~~
+> > PrintOutTracks
+> > |-- plugins
+> > |   |-- BuildFile.xml
+> > |   `-- PrintOutTracks.cc
+> > |-- python
+> > |   |-- __init__.py
+> > |   `-- __init__.pyc
+> > `-- test
+> >     |-- BuildFile.xml
+> >     |-- test_catch2_PrintOutTracks.cc
+> >     `-- test_catch2_main.cc
+> > 
+> > 3 directories, 7 files
+> > ~~~
+> > 
 > Now, you may edit the template files to perform operations on the event data and produce output -  such as histograms or print outs of diagnostic information to screen.
 > ( To edit the files you may use your favorite text editor e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
 >
-> <details><summary> if compilation fails, the following lines may need to be added: </summary>
->
-> at the top of `PrintOutTracks/plugins/BuildFile.xml`
-> ~~~cpp
-> <use name="DataFormats/TrackReco"/>
-> ~~~
-> and in `PrintOutTracks/plugins/PrintOutTracks.cc` the following in the `#include` section:
-> ~~~cpp
-> #include <iostream>
-> #include "DataFormats/TrackReco/interface/Track.h"
-> #include "DataFormats/TrackReco/interface/TrackFwd.h"
-> #include "FWCore/Utilities/interface/InputTag.h"
-> ~~~
-> 
-> </details>
+> > if compilation fails, the following lines may need to be added:
+> > 
+> > at the top of `PrintOutTracks/plugins/BuildFile.xml`
+> > ~~~cpp
+> > <use name="DataFormats/TrackReco"/>
+> > ~~~
+> > and in `PrintOutTracks/plugins/PrintOutTracks.cc` the following in the `#include` section:
+> > ~~~cpp
+> > #include <iostream>
+> > #include "DataFormats/TrackReco/interface/Track.h"
+> > #include "DataFormats/TrackReco/interface/TrackFwd.h"
+> > #include "FWCore/Utilities/interface/InputTag.h"
+> > ~~~
+> > 
 >
 > Inside the `PrintOutTracks` class definition (one line below the member data comment, before the `};`), replace `edm::EDGetTokenT<TrackCollection> tracksToken_;` with:
 > ~~~

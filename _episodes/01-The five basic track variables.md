@@ -72,7 +72,7 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > ~~~bash
 > tree PrintOutTracks
 > ~~~
-> > output
+> > ### output
 > > 
 > > ~~~
 > > PrintOutTracks
@@ -93,7 +93,7 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > Now, you may edit the template files to perform operations on the event data and produce output -  such as histograms or print outs of diagnostic information to screen.
 > ( To edit the files you may use your favorite text editor e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
 >
-> > if compilation fails, the following lines may need to be added:
+> > ### if compilation fails, the following lines may need to be added:
 > > 
 > > at the top of `PrintOutTracks/plugins/BuildFile.xml`
 > > ~~~cpp

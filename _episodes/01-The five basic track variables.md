@@ -68,11 +68,12 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > mkedanlzr PrintOutTracks
 > ~~~
 > {: .language-bash}
-> You may see the files and directories that were produced with  `#!bash mkedanlzr` by running:
+> You may see the files and directories that were produced with  `mkedanlzr` by running:
 > ~~~bash
 > tree PrintOutTracks
 > ~~~
 > <details><summary> output </summary>
+> ~~~
 > PrintOutTracks
 > |-- plugins
 > |   |-- BuildFile.xml
@@ -86,26 +87,27 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 >     `-- test_catch2_main.cc
 > 
 > 3 directories, 7 files
+> ~~~
 > </details>
 >
-> Now, you may edit the template files (with your favorite editor) to perform operations on the event data (to produce output such as printing to the screen or histograms).
-> (e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
+> Now, you may edit the template files to perform operations on the event data and produce output such as histogramed data or printing to the diagnostic information to screen.
+> ( To edit the files you may use your favorite text editor e.g. `emacs -nw PrintOutTracks/plugins/PrintOutTracks.xml`):
 >
 > <details><summary> if compilation fails, the following lines may need to be added: </summary>
+>
 > at the top of `PrintOutTracks/plugins/BuildFile.xml`
-> ~~~
+> ~~~cpp
 > <use name="DataFormats/TrackReco"/>
 > ~~~
-> {: .language-cpp}
 > and in `PrintOutTracks/plugins/PrintOutTracks.cc` the following in the `#include` section:
-> ~~~
+> ~~~cpp
 > #include <iostream>
 > #include "DataFormats/TrackReco/interface/Track.h"
 > #include "DataFormats/TrackReco/interface/TrackFwd.h"
 > #include "FWCore/Utilities/interface/InputTag.h"
 > ~~~
-> {: .language-cpp}
 > </details>
+>
 > Inside the `PrintOutTracks` class definition (one line below the member data comment, before the `};`), replace `edm::EDGetTokenT<TrackCollection> tracksToken_;` with:
 > ~~~
 > edm::EDGetTokenT<edm::View<reco::Track> > tracksToken_;  //used to select which tracks to read from configuration file

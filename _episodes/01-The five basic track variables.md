@@ -40,9 +40,7 @@ The exact definitions are given in the `reco::TrackBase` [header file](https://g
 ## Accessing track variables
 
 Create `print.py` (for example `emacs -nw print.py`, or use your favorite text editor) in `TrackingShortExercize/`, then copy-paste the following code and run it (`python print.py`). Please note, if your `run321457_ZeroBias_AOD.root` is not in the directory you're working from, be sure to use the appropriate path in `line 2`.
-
-{% include codeHeader.html %}
-```python
+~~~
 import DataFormats.FWLite as fwlite
 events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
 tracks = fwlite.Handle("std::vector<reco::Track>")
@@ -59,7 +57,8 @@ for i, event in enumerate(events):
         print "\t dxy: %.4f" %track.dxy(),
         print "\t dz: %.4f"  %track.dz()
 
-```
+~~~
+{: .language-python}
 
 The first three lines load the `FWLite` framework, the `.root` data file, and prepare a `Handle` for the track collection using its full C++ name (`std::vector`). In each event, we load the tracks labeled `generalTracks` and loop over them, printing out the **five basic track variables** for each. The C++ equivalent of this is hidden below (longer and more difficult to write and compile, but faster to execute on large datasets) and is optional for this entire short exercise.
 

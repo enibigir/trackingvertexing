@@ -17,6 +17,22 @@ nicely explained in the chapter [Contributing to a Project](http://git-scm.com/b
 by Scott Chacon.
 Look for the tag ![good_first_issue](https://img.shields.io/badge/-good%20first%20issue-gold.svg). This indicates that the maintainers will welcome a pull request fixing this issue.  
 
+## Building the site locally
+
+There are some recommendations here for creating new lessons
+[Carpentries: 10 things to know](https://carpentries.github.io/lesson-example/#ten-things-you-need-to-know)
+
+The site can be built on a local machine after cloning the repo with:
+```
+make serve
+```
+
+if the build is successful, the server address (something like http://127.0.0.1:4000) will appear at the end of the print out.
+
+May need to install software on the build machine (my version of Ruby needed to be updated).
+
+Note: the gitignore file already keeps the build file from being committed - but we should be careful to keep that true in the future.
+
 
 ## Maintainer(s)
 

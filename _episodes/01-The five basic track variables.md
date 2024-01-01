@@ -261,7 +261,7 @@ to print all tracks comment out this line: `if j<50 or 55<j: continue` as `# if 
 
 The C++-equivalent is hidden below.
 > ## C++ version
-> Update your `EDAnalyzer` adding the following lines:
+> Following up in the previous C++ example, the following lines can be added to the PrintOutTracks plugin (the `EDAnalyzer`).
 >
 > To class declaration:
 > ~~~
@@ -275,51 +275,46 @@ The C++-equivalent is hidden below.
 > {: .language-cpp}
 > Change your `analyze` method to:
 > ~~~
->   std::cout << "Event " << indexEvent_ << std::endl;
->
->   edm::Handle<edm::View<reco::Track> > trackHandle;
->   iEvent.getByToken(tracksToken_, trackHandle);
->   if ( !trackHandle.isValid() ) return;
->   const auto numTotal = trackHandle->size();
->
+> printf("Event %i\n", indexEvent_);
+>  edm::Handle<edm::View<reco::Track> > trackHandle;
+> iEvent.getByToken(tracksToken_, trackHandle);
+> if ( !trackHandle.isValid() ) return;
+> const auto numTotal = trackHandle->size();
+> if (numTotal==0U){ indexEvent_++; return;}
 >   edm::Handle<edm::View<float> > trackMVAstoreHandle;
->   iEvent.getByToken(mvaValsToken_,trackMVAstoreHandle);
->   if ( !trackMVAstoreHandle.isValid() ) return;
->
->   auto numLoose = 0;
->   auto numTight = 0;
->   auto numHighPurity = 0;
->
->   const edm::View<reco::Track>& tracks = *trackHandle;
->   size_t iTrack = 0;
->   for ( auto track : tracks ) {
->     if (track.quality(track.qualityByName("loose"))     ) ++numLoose;
->     if (track.quality(track.qualityByName("tight"))     ) ++numTight;
->     if (track.quality(track.qualityByName("highPurity"))) ++numHighPurity;
->
->     std::cout << "    Track " << iTrack << " "
->        << track.charge()/track.pt() << " "
->               << track.phi() << " "
->               << track.eta() << " "
->               << track.dxy() << " "
->               << track.dz()
->               << track.chi2() << " "
->        << track.ndof() << " "
->               << track.numberOfValidHits() << " "
->               << track.algoName() << " "
->               << trackMVAstoreHandle->at(iTrack)
->               << std::endl;
->     iTrack++;
->   }
->   ++indexEvent_;
->
->   std::cout << "Event " << indexEvent_
->             << " numTotal: " << numTotal
->             << " numLoose: " << numLoose
->             << " numTight: " << numTight
->             << " numHighPurity: " << numHighPurity
->             << std::endl;
->
+> iEvent.getByToken(mvaValsToken_,trackMVAstoreHandle);
+> if ( !trackMVAstoreHandle.isValid() ) return;
+>  auto numLoose = 0;
+> auto numTight = 0;
+> auto numHighPurity = 0;
+>  const edm::View<reco::Track>& tracks = *trackHandle;
+> size_t iTrack = 0;
+> for ( auto track : tracks ) {
+>   if (track.quality(track.qualityByName("loose"))     ) ++numLoose;
+>   if (track.quality(track.qualityByName("tight"))     ) ++numTight;
+>   if (track.quality(track.qualityByName("highPurity"))) ++numHighPurity;
+>     if(iTrack<50 || 55<iTrack){ iTrack++; continue;}
+>   printf( "\t Track %zu", iTrack);
+>   printf( "\t charge/pT: %.3f", (track.charge()/track.pt()));
+>   printf( "\t phi: %.3f", track.phi());
+>   printf( "\t eta: %.3f", track.eta());
+>   printf( "\t dxy: %.4f", track.dxy());
+>   printf( "\t dz: %.4f" , track.dz());
+>   printf( "\t nHits: %i", track.numberOfValidHits());
+>   printf( "(%i P+ %i S)", track.hitPattern().numberOfValidPixelHits(),track.hitPattern().numberOfValidStripHits());
+>   printf( "\t algo: %s" , track.algoName().c_str());
+>   printf( "\t mva: %.3f\n", trackMVAstoreHandle->at(iTrack));
+>   iTrack++;
+> }
+>  printf ( "Event %i ", indexEvent_);
+> printf ( "numTotal: %i ", numTotal);
+> printf ( "numLoose: %i ", numLoose);
+> printf ( "(%.1f %%) ",(float(numLoose)/numTotal*100));
+> printf ( "numTight: %i ", numTight);
+> printf ( "(%.1f %%) ",(float(numTight)/numTotal*100));
+> printf ( "numHighPurity: %i ", numHighPurity);
+> printf ( "(%.1f %%)\n",(float(numHighPurity)/numTotal*100));
+> ++indexEvent_;
 > ~~~
 > {: .language-cpp}
 > Go back to `TrackingShortExercize/` and edit the CMSSW configuration file named `run_cfg.py` (`emacs -nw run_cfg.py`), adding the following line:
@@ -332,8 +327,8 @@ The C++-equivalent is hidden below.
 > cmsRun run_cfg.py
 > ~~~
 > {: .language-python}
-> The `plugin` can be found in `/eos/user/c/cmsdas/2023/short-ex-trk/PrintOutTracks_MVA.cc`
-> The `CMSSW config` file can be found in `/eos/user/c/cmsdas/2023/short-ex-trk/run_cfg_MVA.py`
+> The `plugin` can be found in `/eos/user/c/cmsdas/2024/short-ex-trk/PrintOutTracks_MVA.cc`
+> The `CMSSW config` file can be found in `/eos/user/c/cmsdas/2024/short-ex-trk/run_cfg_MVA.py`
 {: .solution}
 > ## Question 1
 > Now prepare plots for the track variables discussed above, as in the example below (name this file `plot_track_quantities.py` and put it in `TrackingShortExercize/`). Compare the **distributions of track-quality-related variables** (number of pixel hits, track goodness of fit, ..., which are given in input to MVA classifiers) between tracks passing the `highPurity` and `Loose` quality flags. **Do these distributions make sense to you?**
@@ -342,8 +337,10 @@ The C++-equivalent is hidden below.
 > ~~~
 > import DataFormats.FWLite as fwlite
 > import ROOT
+> from ROOT import gROOT
+> import os
 > 
-> events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
+> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 > tracks = fwlite.Handle("std::vector<reco::Track>")
 > 
 > hist_pt       = ROOT.TH1F("pt",       "track pt; p_{T} [GeV]", 100, 0.0, 100.0)
@@ -384,30 +381,52 @@ The C++-equivalent is hidden below.
 > 
 >     if i > 500: break
 > 
+> gROOT.SetBatch(True)
 > c = ROOT.TCanvas( "c", "c", 800, 800)
 > 
+> # make an output directory
+> odir = "{0}/{1}/".format("plots", "highP")
+> if not os.path.isdir(odir):
+>     os.mkdir(odir)
+> 
+> # draw and save histograms as pdf files (can alternatively save as png by replacing .pdf with .png
 > hist_pt.Draw()
 > c.SetLogy()
-> c.SaveAs("track_pt.png")
+> c.SaveAs(odir+"track_pt.pdf")
 > c.SetLogy(False)
 > 
 > hist_eta.Draw()
-> c.SaveAs("track_eta.png")
+> c.SaveAs(odir+"track_eta.pdf")
 > hist_phi.Draw()
-> c.SaveAs("track_phi.png")
+> c.SaveAs(odir+"track_phi.pdf")
 > 
 > hist_highP_normChi2.DrawNormalized()
 > hist_loose_normChi2.DrawNormalized('same')
-> c.SaveAs("track_normChi2.png")
+> c.SaveAs(odir+"track_normChi2.pdf")
 > hist_highP_numPixelHits.DrawNormalized()
 > hist_loose_numPixelHits.DrawNormalized('same')
-> c.SaveAs("track_nPixelHits.png")
+> c.SaveAs(odir+"track_nPixelHits.pdf")
 > hist_highP_numValidHits.DrawNormalized()
 > hist_loose_numValidHits.DrawNormalized('same')
-> c.SaveAs("track_nValHits.png")
+> c.SaveAs(odir+"track_nValHits.pdf")
 > hist_highP_numTkLayers.DrawNormalized()
 > hist_loose_numTkLayers.DrawNormalized('same')
-> c.SaveAs("track_nTkLayers.png")
+> c.SaveAs(odir+"track_nTkLayers.pdf")
+> 
+> # OPTIONAL: create a root file and save the histograms there
+> # this way you can dynamically view and style histograms (and save to pdf/png with another python script) without having to loop over the AOD/miniAOD everytime
+> ofile = ROOT.TFile.Open(odir+"hists.root", "RECREATE")
+> ofile.WriteObject(hist_pt, "hist_pt")
+> ofile.WriteObject(hist_eta, "hist_eta")
+> ofile.WriteObject(hist_phi, "hist_phi")
+> ofile.WriteObject(hist_loose_normChi2, "hist_loose_normChi2")
+> ofile.WriteObject(hist_highP_normChi2, "hist_highP_normChi2")
+> ofile.WriteObject(hist_loose_numPixelHits, "hist_loose_numPixelHits")
+> ofile.WriteObject(hist_highP_numPixelHits, "hist_highP_numPixelHits")
+> ofile.WriteObject(hist_loose_numValidHits, "hist_loose_numValidHits")
+> ofile.WriteObject(hist_highP_numValidHits, "hist_highP_numValidHits")
+> ofile.WriteObject(hist_loose_numTkLayers, "hist_loose_numTkLayers")
+> ofile.WriteObject(hist_highP_numTkLayers, "hist_highP_numTkLayers")
 > ~~~
 > {: .language-python}
 > *	track_pt.png:
@@ -446,9 +465,9 @@ In particular, the track information saved in the `PFCandidates` is the followin
 Consider that the `packedPFCandidates` collects both **charged** and **neutral candidates**, therefore before trying to access the track information it is important to ensure that the **candidate is charged** and has the **track information correctly stored** (`track.hasTrackDetails()`).
 
 > ## Question 2
-> Write a simple script `print-comparison.py` that reads a MiniAOD file and the [AOD](https://twiki.cern.ch/twiki/bin/view/CMS/AOD) file and compare plots of the same variables we looked at before for `HighPurity` tracks. For the track p<sub>T</sub> distributuon, focus on the low p<sub>T</sub> region below 5 [GeV](https://twiki.cern.ch/twiki/bin/view/CMS/GeV). **Can you see any (non-statistical) difference with the previosu plots?** You can copy a MiniAOD file with
+> Write a simple script `print-comparison.py` that reads a MiniAOD file and the [AOD](https://twiki.cern.ch/twiki/bin/view/CMS/AOD) file and compare plots of the same variables we looked at before for `HighPurity` tracks. For the track p<sub>T</sub> distributuon, focus on the low p<sub>T</sub> region below 5 [GeV](https://twiki.cern.ch/twiki/bin/view/CMS/GeV). **Can you see any (non-statistical) difference with the previosu plots?** The MiniAOD file is located here:
 > > ~~~
-> cp /eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_MINIAOD.root $TMPDIR
+> root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_MINIAOD.root
 > ~~~
 > {: .language-bash}
 {: .challenge}
@@ -456,10 +475,11 @@ Consider that the `packedPFCandidates` collects both **charged** and **neutral c
 > ~~~
 > import DataFormats.FWLite as fwlite
 > import ROOT
+> import os
 > ROOT.gROOT.SetBatch(True)
 > 
-> events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_MINIAOD.root")
-> eventsAOD = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
+> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_MINIAOD.root")
+> eventsAOD = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 > 
 > tracks     = fwlite.Handle("std::vector<pat::PackedCandidate>")
 > losttracks = fwlite.Handle("std::vector<pat::PackedCandidate>")
@@ -540,35 +560,62 @@ Consider that the `packedPFCandidates` collects both **charged** and **neutral c
 > 
 > c = ROOT.TCanvas( "c", "c", 800, 800)
 > 
+> # make an output directory
+> odir = "{0}/{1}/".format("plots", "miniAOD")
+> if not os.path.isdir(odir):
+>     os.mkdir(odir)
+> 
+> # draw and save histograms as pdf files (can alternatively save as png by replacing .pdf with .png
 > hist_pt.Draw()
 > hist_pt_AOD.Draw("same")
 > c.SetLogy()
-> c.SaveAs("track_pt_miniaod.png")
+> c.SaveAs(odir+"track_pt_miniaod.pdf")
 > 
 > hist_lowPt_AOD.Draw()
 > hist_lowPt.Draw("same")
 > c.SetLogy()
-> c.SaveAs("track_lowPt_miniaod.png")
+> c.SaveAs(odir+"track_lowPt_miniaod.pdf")
 > c.SetLogy(False)
 > hist_eta_AOD.Draw()
 > hist_eta.Draw("same")
-> c.SaveAs("track_eta_miniaod.png")
+> c.SaveAs(odir+"track_eta_miniaod.pdf")
 > hist_phi_AOD.Draw()
 > hist_phi.Draw("same")
-> c.SaveAs("track_phi_miniaod.png")
+> c.SaveAs(odir+"track_phi_miniaod.pdf")
 > 
 > hist_normChi2_AOD.Draw()
 > hist_normChi2.Draw("same")
-> c.SaveAs("track_normChi2_miniaod.png")
+> c.SaveAs(odir+"track_normChi2_miniaod.pdf")
 > hist_numPixelHits_AOD.Draw()
 > hist_numPixelHits.Draw("same")
-> c.SaveAs("track_nPixelHits_miniaod.png")
+> c.SaveAs(odir+"track_nPixelHits_miniaod.pdf")
 > hist_numValidHits_AOD.Draw()
 > hist_numValidHits.Draw("same")
-> c.SaveAs("track_nValHits_miniaod.png")
+> c.SaveAs(odir+"track_nValHits_miniaod.pdf")
 > hist_numTkLayers_AOD.Draw()
 > hist_numTkLayers.Draw("same")
-> c.SaveAs("track_nTkLayers_miniaod.png")
+> c.SaveAs(odir+"track_nTkLayers_miniaod.pdf")
+> 
+> # OPTIONAL: create a root file and save the histograms there
+> # this way you can dynamically view and style histograms (and save to pdf/png with another python script) without having to loop over the AOD/miniAOD everytime
+> ofile = ROOT.TFile.Open(odir+"hists_AOD.root", "RECREATE")
+> ofile.WriteObject(hist_pt, "hist_pt")
+> ofile.WriteObject(hist_pt_AOD, "hist_pt_AOD")
+> ofile.WriteObject(hist_lowPt, "hist_lowPt")
+> ofile.WriteObject(hist_lowPt_AOD, "hist_lowPt_AOD")
+> ofile.WriteObject(hist_eta, "hist_eta")
+> ofile.WriteObject(hist_eta_AOD, "hist_eta_AOD")
+> ofile.WriteObject(hist_phi, "hist_phi")
+> ofile.WriteObject(hist_phi_AOD, "hist_phi_AOD")
+> 
+> ofile.WriteObject(hist_normChi2, "hist_normChi2")
+> ofile.WriteObject(hist_normChi2_AOD, "hist_normChi2_AOD")
+> ofile.WriteObject(hist_numPixelHits, "hist_numPixelHits")
+> ofile.WriteObject(hist_numPixelHits_AOD, "hist_numPixelHits_AOD")
+> ofile.WriteObject(hist_numValidHits, "hist_numValidHits")
+> ofile.WriteObject(hist_numValidHits_AOD, "hist_numValidHits_AOD")
+> ofile.WriteObject(hist_numTkLayers, "hist_numTkLayers")
+> ofile.WriteObject(hist_numTkLayers_AOD, "hist_numTkLayers_AOD")
 > ~~~
 > {: .language-python}
 {: .solution}

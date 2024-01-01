@@ -20,7 +20,7 @@ import DataFormats.FWLite as fwlite
 import ROOT
 import math
 
-events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
+events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 tracks = fwlite.Handle("std::vector<reco::Track>")
 
 for i, event in enumerate(events):
@@ -31,15 +31,18 @@ for i, event in enumerate(events):
 ~~~
 {: .language-python}
 > ## Question 1
-Now we can use this to do some kinematics. Assuming that the particle is a pion (pion mass = 0.140 [GeV](https://twiki.cern.ch/twiki/bin/view/CMS/GeV)), calculate its kinetic energy.
+Now we can investigate the kinematics of the tracks in our file. Assuming that the particle is a pion (pion mass = 0.140 [GeV](https://twiki.cern.ch/twiki/bin/view/CMS/GeV)), calculate its kinetic energy.
 {: .challenge}
+> ## Additional information
+> Identifying the particle that made the track is difficult: the mass of some low-momentum tracks can be identified by their energy loss, called dE/dx, and electrons and muons can be identified by signatures in other subdetectors. Without any other information, as an approximation, we can assume that a **randomly chosen track is a pion**, since hadron collisions produce a lot of pions.
+{: .solution}
 > ## Answer
 > ~~~
 > import DataFormats.FWLite as fwlite
 > import ROOT
 > import math
 > 
-> events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root")
+> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 > tracks = fwlite.Handle("std::vector<reco::Track>")
 > 
 > for i, event in enumerate(events):
@@ -51,10 +54,7 @@ Now we can use this to do some kinematics. Assuming that the particle is a pion 
 > ~~~
 > {: .language-python}
 {: .solution}
-> ## Additional information
-> Identifying the particle that made the track is difficult: the mass of some low-momentum tracks can be identified by their energy loss, called dE/dx, and electrons and muons can be identified by signatures in other subdetectors. Without any other information, the safest assumption is that a **randomly chosen track is a pion**, since hadron collisions produce a lot of pions.
-{: .solution}
-Let's look for resonances. Given two tracks,
+Now, let's look for resonances! Given two tracks,
 ~~~
 if len(tracks.product()) > 1:
 
@@ -87,9 +87,9 @@ for i, event in enumerate(events):
         print "    Track", j, track.charge()/track.pt(), track.phi(), track.eta(), track.dxy(), track.dz()
 ~~~
 {: .language-python}
-Run this code on the `run321167_Charmonium_AOD.root` file that you can copy with:
+Run this code on the `run321167_Charmonium_AOD.root` file found here:
 ~~~
-cp /eos/user/c/cmsdas/2023/short-ex-trk/run321167_Charmonium_AOD.root $TMPDIR
+root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_Charmonium_AOD.root
 ~~~
 {: .language-bash}
 Notice how few muon tracks there are compared to the same code executed for `generalTracks`. In fact, you only see as many muons as you do because this data sample was collected with a muon trigger. (The muon definition in the trigger is looser than the `globalMuons` algorithm, which is why there are some events with fewer than two `globalMuons`.)
@@ -104,8 +104,10 @@ See in the `Appendix` an application for the Muon and Tracks objects usage in th
 > import math
 > import DataFormats.FWLite as fwlite
 > import ROOT
+> import os
+> ROOT.gROOT.SetBatch(True)
 > 
-> events = fwlite.Events("/eos/user/c/cmsdas/2023/short-ex-trk/run321167_Charmonium_AOD.root")
+> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_Charmonium_AOD.root")
 > tracks = fwlite.Handle("std::vector<reco::Track>")
 > mass_histogram = ROOT.TH1F("mass", "mass", 100, 0.0, 5.0)
 > 
@@ -126,8 +128,12 @@ See in the `Appendix` an application for the Muon and Tracks objects usage in th
 >         mass_histogram.Fill(mass)
 > 
 > c = ROOT.TCanvas ("c", "c", 800, 800)
+> odir = "{0}/{1}/".format("plots", "dimuonmass")
+> if not os.path.isdir(odir):
+>     os.mkdir(odir)
+> 
 > mass_histogram.Draw()
-> c.SaveAs("mass.png")
+> c.SaveAs(odir+"mass.png")
 > ~~~
 > {: .language-python}
 > The histogram should look like this:

@@ -117,6 +117,8 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > {: .language-cpp}
 > Put the following inside the `PrintOutTracks::analyze` method:
 > ~~~
+> // printf requires the package: #include <stdio.h>, but it is loaded elsewere in the framework
+> // another useful method of displaying information is with std::cout
 > printf("Event %i\n", indexEvent_);
 >  edm::Handle<edm::View<reco::Track> > trackHandle;
 > iEvent.getByToken(tracksToken_, trackHandle);
@@ -270,6 +272,7 @@ The C++-equivalent is hidden below.
 > {: .language-cpp}
 > To constructor:
 > ~~~
+> // after tracksToken_(...)
 > , mvaValsToken_( consumes<edm::View<float> >(iConfig.getUntrackedParameter<edm::InputTag>("mvaValues", edm::InputTag("generalTracks", "MVAValues")) ) )
 > ~~~
 > {: .language-cpp}

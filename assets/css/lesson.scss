@@ -381,6 +381,14 @@ pre.highlight span.err {
     border: none;
 }
 
+// added for style of copy button
+pre.highlight {
+     position: relative;
+    // copy code to clipboard
+    .copy {position: absolute;right: 1.2rem;top: 0.4rem;opacity: 0;
+    &:active,&:focus,&:hover {opacity: 1;}}
+    &:active .copy,&:focus .copy,&:hover .copy {opacity: 0.4;}
+}
 
 //----------------------------------------
 // keyboard key style, from StackExchange.

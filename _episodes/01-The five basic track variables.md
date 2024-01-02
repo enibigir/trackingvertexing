@@ -384,7 +384,7 @@ The C++-equivalent is hidden below.
 > 
 >     if i > 500: break
 > 
-> gROOT.SetBatch(True)
+> gROOT.SetBatch(True) # this allows pyroot to run in batch mode - which prevents the histograms from being displayed every time they are drawn.
 > c = ROOT.TCanvas( "c", "c", 800, 800)
 > 
 > # make an output directory
@@ -415,23 +415,72 @@ The C++-equivalent is hidden below.
 > hist_highP_numTkLayers.DrawNormalized()
 > hist_loose_numTkLayers.DrawNormalized('same')
 > c.SaveAs(odir+"track_nTkLayers.pdf")
-> 
-> # OPTIONAL: create a root file and save the histograms there
-> # this way you can dynamically view and style histograms (and save to pdf/png with another python script) without having to loop over the AOD/miniAOD everytime
-> ofile = ROOT.TFile.Open(odir+"hists.root", "RECREATE")
-> ofile.WriteObject(hist_pt, "hist_pt")
-> ofile.WriteObject(hist_eta, "hist_eta")
-> ofile.WriteObject(hist_phi, "hist_phi")
-> ofile.WriteObject(hist_loose_normChi2, "hist_loose_normChi2")
-> ofile.WriteObject(hist_highP_normChi2, "hist_highP_normChi2")
-> ofile.WriteObject(hist_loose_numPixelHits, "hist_loose_numPixelHits")
-> ofile.WriteObject(hist_highP_numPixelHits, "hist_highP_numPixelHits")
-> ofile.WriteObject(hist_loose_numValidHits, "hist_loose_numValidHits")
-> ofile.WriteObject(hist_highP_numValidHits, "hist_highP_numValidHits")
-> ofile.WriteObject(hist_loose_numTkLayers, "hist_loose_numTkLayers")
-> ofile.WriteObject(hist_highP_numTkLayers, "hist_highP_numTkLayers")
 > ~~~
 > {: .language-python}
+> 
+> > ### Optional: save histograms to root file
+> > Additional lines of code to create a root file and save the histograms there
+> > 
+> > this way you can dynamically view and style histograms (and save to pdf/png with another python script) without having to loop over the AOD/miniAOD everytime you want to change histogram or canvas attributes (like color, line size, labels etc.). Plots are most useful when they clearly describe the information being presented. This technique is also useful for creating "ratio" plots and "pull" plots.
+> > ~~~
+> > # OPTIONAL: create a root file and save the histograms there
+> > ofile = ROOT.TFile.Open(odir+"hists.root", "RECREATE")
+> > ofile.WriteObject(hist_pt, "hist_pt")
+> > ofile.WriteObject(hist_eta, "hist_eta")
+> > ofile.WriteObject(hist_phi, "hist_phi")
+> > ofile.WriteObject(hist_loose_normChi2, "hist_loose_normChi2")
+> > ofile.WriteObject(hist_highP_normChi2, "hist_highP_normChi2")
+> > ofile.WriteObject(hist_loose_numPixelHits, "hist_loose_numPixelHits")
+> > ofile.WriteObject(hist_highP_numPixelHits, "hist_highP_numPixelHits")
+> > ofile.WriteObject(hist_loose_numValidHits, "hist_loose_numValidHits")
+> > ofile.WriteObject(hist_highP_numValidHits, "hist_highP_numValidHits")
+> > ofile.WriteObject(hist_loose_numTkLayers, "hist_loose_numTkLayers")
+> > ofile.WriteObject(hist_highP_numTkLayers, "hist_highP_numTkLayers")
+> > ~~~
+> > {: .language-python}
+> {: .solution2}
+> 
+> > ### Optional: If having trouble viewing the histograms
+> > You may try displaying the files directly from cmslpc or lxplus using the `display` command:
+> > ~~~bash
+> > display plots/highP/track_pt.pdf 
+> > ~~~
+> > this requires all display settings to the remote connection to be correctly configured.
+> > 
+> > Sometimes it can be slow to view histograms on cmslpc or lxplus. This can happen because of a slow network connection to the remote computers - possibly when connected far away from Fermilab or CERN.
+> > 
+> > One option to view histograms is to copy them to the local machine you are working from (i.e. laptop) - this can be done with commands like `scp` or `rsync`. You may find more information on these commands by looking at the manuals. From the command line run `man scp` or `man rsync`. You can also google these command to find more documentation and examples.
+> > 
+> > The basic syntax of both commands  (for copying a file from a remote machine to the local machine) is: 
+> > ~~~bash
+> > <scp/rsync> <options/flags> <source-path> <destination-path>
+> > ~~~
+> > where you must replace the text for each `< >` with the relavent information. 
+> > 
+> > Recommending to copy files with scp for now (it is faster to learn): 
+> > First make a directory on the your local computer with `mkdir histograms`. And relocate to that dirctory with `cd histograms`
+> > ~~~bash
+> > mkdir histograms
+> > cd histograms
+> > ~~~
+> > 
+> > - Determine the absolute path on cmslpc of the directory (or file) you wish to have on the local computer: `pwd` on cmslpc. 
+> > - use your cmslpc/lxplus username (if it is the same as on the local machine then ${USER} will work)
+> > - if you set up an ssh config file on the local machine - you can use the hostname from that configuration
+> >
+> > The following examples may help guide you to the right command (replace items surrounded by `< >`):
+> > ~~~bash
+> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:<absolute-path-to-cmslpc-directory>" ./ 
+> > scp -rp "<cmslpc-ssh-hostname>:<absolute-path-to-cmslpc-directory>" ./ 
+> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:/uscms/homes/<first-letter-of-lpc-username>/<lpc-username>/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > scp -rp "$USER@cmslpc-sl7.fnal.gov:/uscms/homes/${USER:0:1}/${USER}/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > ~~~
+> > 
+> > When you have time `rsync` is worth learning about.
+> > Note: a main difference between `scp` and `rsync` is: `scp` will copy all items from the remote machine and `rsync` will only copy the files that don't exist locally and those that have been updated. The `rsync` command can be very useful - because it can be re-run multiple times without wasting time copying things that are already up to date. The caveat is that you must pay attention to the `/` at the the end of the path names if you are copying directories for both the . With the `/` means contents of directory, without the `/` is including the directory name. This must be considered for both the source path and the destination path.
+> > 
+> {: .solution2}
+>
 > *	track_pt.png:
 > <a href="https://raw.githubusercontent.com/CMSTrackingPOG/trackingvertexing/gh-pages/data/track_pt.png"><img src = "https://raw.githubusercontent.com/CMSTrackingPOG/trackingvertexing/gh-pages/data/track_pt.png" alt="Track pT" width ="500"></a>
 > *	track_eta.png:
@@ -479,7 +528,7 @@ Consider that the `packedPFCandidates` collects both **charged** and **neutral c
 > import DataFormats.FWLite as fwlite
 > import ROOT
 > import os
-> ROOT.gROOT.SetBatch(True)
+> ROOT.gROOT.SetBatch(True) # this allows pyroot to run in batch mode - which prevents the histograms from being displayed every time they are drawn.
 > 
 > events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_MINIAOD.root")
 > eventsAOD = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2023/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
@@ -598,29 +647,57 @@ Consider that the `packedPFCandidates` collects both **charged** and **neutral c
 > hist_numTkLayers_AOD.Draw()
 > hist_numTkLayers.Draw("same")
 > c.SaveAs(odir+"track_nTkLayers_miniaod.pdf")
-> 
-> # OPTIONAL: create a root file and save the histograms there
-> # this way you can dynamically view and style histograms (and save to pdf/png with another python script) without having to loop over the AOD/miniAOD everytime
-> ofile = ROOT.TFile.Open(odir+"hists_AOD.root", "RECREATE")
-> ofile.WriteObject(hist_pt, "hist_pt")
-> ofile.WriteObject(hist_pt_AOD, "hist_pt_AOD")
-> ofile.WriteObject(hist_lowPt, "hist_lowPt")
-> ofile.WriteObject(hist_lowPt_AOD, "hist_lowPt_AOD")
-> ofile.WriteObject(hist_eta, "hist_eta")
-> ofile.WriteObject(hist_eta_AOD, "hist_eta_AOD")
-> ofile.WriteObject(hist_phi, "hist_phi")
-> ofile.WriteObject(hist_phi_AOD, "hist_phi_AOD")
-> 
-> ofile.WriteObject(hist_normChi2, "hist_normChi2")
-> ofile.WriteObject(hist_normChi2_AOD, "hist_normChi2_AOD")
-> ofile.WriteObject(hist_numPixelHits, "hist_numPixelHits")
-> ofile.WriteObject(hist_numPixelHits_AOD, "hist_numPixelHits_AOD")
-> ofile.WriteObject(hist_numValidHits, "hist_numValidHits")
-> ofile.WriteObject(hist_numValidHits_AOD, "hist_numValidHits_AOD")
-> ofile.WriteObject(hist_numTkLayers, "hist_numTkLayers")
-> ofile.WriteObject(hist_numTkLayers_AOD, "hist_numTkLayers_AOD")
 > ~~~
 > {: .language-python}
+> 
+> > ### Optional: save histograms to root file
+> > see previus example for why you might want to do this.
+> > ~~~
+> > # OPTIONAL: create a root file and save the histograms there
+> > ofile = ROOT.TFile.Open(odir+"hists_AOD.root", "RECREATE")
+> > ofile.WriteObject(hist_pt, "hist_pt")
+> > ofile.WriteObject(hist_pt_AOD, "hist_pt_AOD")
+> > ofile.WriteObject(hist_lowPt, "hist_lowPt")
+> > ofile.WriteObject(hist_lowPt_AOD, "hist_lowPt_AOD")
+> > ofile.WriteObject(hist_eta, "hist_eta")
+> > ofile.WriteObject(hist_eta_AOD, "hist_eta_AOD")
+> > ofile.WriteObject(hist_phi, "hist_phi")
+> > ofile.WriteObject(hist_phi_AOD, "hist_phi_AOD")
+> > 
+> > ofile.WriteObject(hist_normChi2, "hist_normChi2")
+> > ofile.WriteObject(hist_normChi2_AOD, "hist_normChi2_AOD")
+> > ofile.WriteObject(hist_numPixelHits, "hist_numPixelHits")
+> > ofile.WriteObject(hist_numPixelHits_AOD, "hist_numPixelHits_AOD")
+> > ofile.WriteObject(hist_numValidHits, "hist_numValidHits")
+> > ofile.WriteObject(hist_numValidHits_AOD, "hist_numValidHits_AOD")
+> > ofile.WriteObject(hist_numTkLayers, "hist_numTkLayers")
+> > ofile.WriteObject(hist_numTkLayers_AOD, "hist_numTkLayers_AOD")
+> > ~~~
+> > {: .language-python}
+> {: .solution2}
+> > 
+> > ### Optional: copy histograms to local computer
+> > Recommending to copy files with scp for now (it is faster to learn): 
+> > First make a directory on the your local computer with `mkdir histograms`. And relocate to that dirctory with `cd histograms`
+> > ~~~bash
+> > mkdir histograms
+> > cd histograms
+> > ~~~
+> > 
+> > - Determine the absolute path on cmslpc of the directory (or file) you wish to have on the local computer: `pwd` on cmslpc. 
+> > - use your cmslpc/lxplus username (if it is the same as on the local machine then ${USER} will work)
+> > - if you set up an ssh config file on the local machine - you can use the hostname from that configuration
+> >
+> > The following examples may help guide you to the right command (replace items surrounded by `< >`):
+> > ~~~bash
+> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:<absolute-path-to-cmslpc-directory>" ./ 
+> > scp -rp "<cmslpc-ssh-hostname>:<absolute-path-to-cmslpc-directory>" ./ 
+> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:/uscms/homes/<first-letter-of-lpc-username>/<lpc-username>/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > scp -rp "$USER@cmslpc-sl7.fnal.gov:/uscms/homes/${USER:0:1}/${USER}/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > ~~~
+> > 
+> > When you have time `rsync` is worth learning about.
+> {: .solution2}
 {: .solution}
 {% include links.md %}
 

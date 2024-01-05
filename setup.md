@@ -23,22 +23,22 @@ title: Setup
 Keep in mind your `<USERNAME>` and use it in the following instructions:
 ~~~
 # login to the LPC cluster with DISPLAY set
-ssh -Y <USERNAME>@lxplus.cern.ch
+ssh -Y <USERNAME>@cmslpc-sl7.fnal.gov
 
 # get to your no-backup working area
-cd private
+cd nobackup
 
 # line to find out what shell you are in
 echo $0
 
-# CMSSW compiler                              
-# if you are using BASH :                                                                      
+# CMSSW compiler
+# if you are using BASH :
 export SCRAM_ARCH=slc7_amd64_gcc700
 
 # if you are using (T)CSH
 setenv SCRAM_ARCH slc7_amd64_gcc700
 
-# crab, we will not use it but take it as an habit!                                                                                                    
+# crab, we will not use it but take it as a habit!
 source /cvmfs/cms.cern.ch/crab3/crab.sh
 
 # set cmsenv and cmsrel aliases 
@@ -47,6 +47,7 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 # create your CMSSW working area
 mkdir TrackingShortExercize
 cd TrackingShortExercize
+export TMPDIR=`pwd`
 cmsrel CMSSW_10_6_18
 cd CMSSW_10_6_18/src
 cmsenv
@@ -73,7 +74,7 @@ git config --global user.github <your github username>
 We will be using **ZeroBias events** (events from nominally colliding bunch crossings but without a requirement for any specific activity in the event) from Run 2 (2018) data. This dataset is small enough to be easily accessible as a file (remember to be in the **nobackup** working area). You should have plenty of space, copy it to your working directory with the copy command below:
 
 ~~~
-cp /eos/user/c/cmsdas/2023/short-ex-trk/run321167_ZeroBias_AOD.root $TMPDIR
+cp /eos/uscms/store/user/cmsdas/2024/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root $TMPDIR
 ~~~
 {: .language-bash}
 ## Checking the file content

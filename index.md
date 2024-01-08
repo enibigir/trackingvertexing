@@ -40,8 +40,18 @@ We will present an introduction to using tracks for analyses in the era of **lar
 > *Lead Contact
 > <table>
 >   <tr>
->     <td align="center"><a href="https://github.com/danbarto"><img src="https://danbarto.github.io/images/me.png?raw=true" width="100px;" alt=""/><br /><sub><b>Daniel Spitzbart</b></sub></a><br /><a href="https://danbarto.github.io" title="More about him">🖋</a></td>
->     <td align="center"><a href="https://github.com/akgrummer"><img src="" width="100px;" alt=""/><br /><sub><b>Aidan Grummer</b></sub></a><br /><a href="https://github.com/akgrummer" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/danbarto"><img src="https://lpc.fnal.gov//CMSDAS2024/Daniel_Spitzbart.png" width="100px;" alt=""/><br /><sub><b>Daniel Spitzbart</b></sub></a><br /><a href="https://danbarto.github.io" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Michael_Carrigan.png" width="100px;" alt=""/><br /><sub><b>Michael Carrigan</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/akgrummer"><img src="https://lpc.fnal.gov//CMSDAS2024/Aidan_Grummer.jpg" width="100px;" alt=""/><br /><sub><b>Aidan Grummer</b></sub></a><br /><a href="https://github.com/akgrummer" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Keith_Ulmer.jpg" width="100px;" alt=""/><br /><sub><b>Keith Ulmer</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Kai_Yi.jpg" width="100px;" alt=""/><br /><sub><b>Kai Yi</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>   </tr>
+>   <tr>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Irene_Zoi.jpg" width="100px;" alt=""/><br /><sub><b>Irene Zoi</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Sam_Bein.jpg" width="100px;" alt=""/><br /><sub><b>Sam Bein</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Brunella_D_Anzi.jpg" width="100px;" alt=""/><br /><sub><b>Brunella D'Anzi</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Nicola_De_Filippis.png" width="100px;" alt=""/><br /><sub><b>Nicola De Filippis</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
+>     <td align="center"><a href="https://github.com/"><img src="https://lpc.fnal.gov//CMSDAS2024/Ulascan_Sarica.jpg" width="100px;" alt=""/><br /><sub><b>Ulascan Sarica</b></sub></a><br /><a href="https://github.com/" title="More about him">🖋</a></td>
 >   </tr>
 > </table>
 {: .testimonial}

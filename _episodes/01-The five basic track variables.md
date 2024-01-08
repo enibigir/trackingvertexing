@@ -187,8 +187,8 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > This will produce the same output as the Python script, but it can be used on huge datasets. Though the language is different, notice that C++ and  `FWLite` use the same names for member functions: `charge()`, `pt()`, `phi()`, `eta()`, `dxy()`, and `dz()`.
 > That is intentional: you can learn what kinds of data are available with interactive  `FWLite ` and then use the same access methods when writing GRID jobs. There is another way to access `FWLite` with ROOT's C++-like syntax.
 >
-> The plugin is here: `/eos/user/c/cmsdas/2024/short-ex-trk/MyDirectory/PrintOutTracks/plugins/PrintOutTracks.cc`
-> The `run_cfg.py` is here: `/eos/user/c/cmsdas/2024/short-ex-trk/MyDirectory/PrintOutTracks/test/run_cfg.py`
+> The plugin is here: `/eos/uscms/store/user/cmsdas/2024/short_exercises/trackingvertexing/MyDirectory/PrintOutTracks/plugins/PrintOutTracks.cc`
+> The `run_cfg.py` is here: `/eos/uscms/store/user/cmsdas/2024/short_exercises/trackingvertexing/MyDirectory/PrintOutTracks/test/run_cfg.py`
 {: .solution}
 
 ## Track quality variables
@@ -330,8 +330,8 @@ The C++-equivalent is hidden below.
 > cmsRun run_cfg.py
 > ~~~
 > {: .language-python}
-> The `plugin` can be found in `/eos/user/c/cmsdas/2024/short-ex-trk/PrintOutTracks_MVA.cc`
-> The `CMSSW config` file can be found in `/eos/user/c/cmsdas/2024/short-ex-trk/run_cfg_MVA.py`
+> The `plugin` can be found in `/eos/uscms/store/user/cmsdas/2024/short_exercises/trackingvertexing/PrintOutTracks_MVA.cc`
+> The `CMSSW config` file can be found in `/eos/uscms/store/user/cmsdas/2024/short_exercises/trackingvertexing/run_cfg_MVA.py`
 {: .solution}
 > ## Question 1
 > Now prepare plots for the track variables discussed above, as in the example below (name this file `plot_track_quantities.py` and put it in `TrackingShortExercize/`). Compare the **distributions of track-quality-related variables** (number of pixel hits, track goodness of fit, ..., which are given in input to MVA classifiers) between tracks passing the `highPurity` and `Loose` quality flags. **Do these distributions make sense to you?**

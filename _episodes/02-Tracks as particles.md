@@ -130,7 +130,7 @@ See in the `Appendix` an application for the Muon and Tracks objects usage in th
 > c = ROOT.TCanvas ("c", "c", 800, 800)
 > odir = "{0}/{1}/".format("plots", "dimuonmass")
 > if not os.path.isdir(odir):
->     os.mkdir(odir)
+>     os.makedirs(odir)
 > 
 > mass_histogram.Draw()
 > c.SaveAs(odir+"mass.png")

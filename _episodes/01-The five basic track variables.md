@@ -390,7 +390,7 @@ The C++-equivalent is hidden below.
 > # make an output directory
 > odir = "{0}/{1}/".format("plots", "highP")
 > if not os.path.isdir(odir):
->     os.mkdir(odir)
+>     os.makedirs(odir)
 > 
 > # draw and save histograms as pdf files (can alternatively save as png by replacing .pdf with .png
 > hist_pt.Draw()

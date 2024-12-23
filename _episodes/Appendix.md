@@ -18,9 +18,9 @@ LXR is a very useful tool to look-up methods/classes/configuration files/paramet
 * Fermilab: [http://cmslxr.fnal.gov/lxr/](http://cmslxr.fnal.gov/lxr/)
 
 ## Further useful code references
-*	CMSSW source code on GitHub for `CMSSW_10_6_18`: [https://github.com/cms-sw/cmssw/tree/CMSSW_10_6_18](https://github.com/cms-sw/cmssw/tree/CMSSW_10_6_18)
+*	CMSSW source code on GitHub for `CMSSW_14_0_19`: [https://github.com/cms-sw/cmssw/tree/CMSSW_14_0_19](https://github.com/cms-sw/cmssw/tree/CMSSW_14_0_19)
     *	you can switch to the branch or version (encoded as git tag) using the drop down menu left of the green `New Pull Request` button
-*	CMSSW Reference Manual: [https://cmssdt.cern.ch/SDT/doxygen/CMSSW_10_6_18/doc/html/classes.html](https://cmssdt.cern.ch/SDT/doxygen/CMSSW_10_6_18/doc/html/classes.html)
+*	CMSSW Reference Manual: [https://cmsdoxygen.web.cern.ch/cmsdoxygen/CMSSW_14_0_19/doc/html/classes.html](https://cmsdoxygen.web.cern.ch/cmsdoxygen/CMSSW_14_0_19/doc/html/classes.html)
 
 ## Tracking efficiency performance via the Tag and Probe technique
 The **tag and probe** method is a **data-driven technique** for measuring particle detection efficiencies. It is based on the decays of **known resonances** (e.g. J/ψ, ϒ and Z) to pairs of the particles being studied. In this exercise, these particles are muons, and the Z resonance is nominally used.
@@ -53,7 +53,7 @@ The fit, which is made in a different space (the invariant mass space) allows to
 At the end of this section, then, you will have to make these fits for each bin in the range of interest.
 The dataset used in this exercise has been collected by the CMS experiment, in proton-proton collisions at the LHC. It contains `986100 entries` (muon pair candidates) with an associated invariant mass. For each candidate, the transverse `momentum (pt)`, `rapidity(η)` and `azimuthal angle (φ)` are stored, along with a binary flag `probe_isTrkMatch`, which is `1` in case the corresponding probe satisfied the track matching selection criteria and 0 in case it doesn’t.
 
-Copy `CMSDAS_TP` inside `CMSSW_10_6_18/src`:
+Copy `CMSDAS_TP` inside `CMSSW_14_0_19/src`:
 ~~~
 cp -r /eos/uscms/store/user/cmsdas/2025/short_exercises/trackingvertexing/CMSDAS_TP .
 ~~~

@@ -23,7 +23,7 @@ title: Setup
 Keep in mind your `<USERNAME>` and use it in the following instructions:
 ~~~
 # login to the LPC cluster with DISPLAY set
-ssh -Y <USERNAME>@cmslpc-sl7.fnal.gov
+ssh -Y <USERNAME>@cmslpc-el8.fnal.gov
 
 # get to your no-backup working area
 cd nobackup
@@ -33,10 +33,10 @@ echo $0
 
 # CMSSW compiler
 # if you are using BASH :
-export SCRAM_ARCH=slc7_amd64_gcc700
+export SCRAM_ARCH=el8_amd64_gcc12
 
 # if you are using (T)CSH
-setenv SCRAM_ARCH slc7_amd64_gcc700
+setenv SCRAM_ARCH el8_amd64_gcc12
 
 # crab, we will not use it but take it as a habit!
 source /cvmfs/cms.cern.ch/crab3/crab.sh
@@ -48,8 +48,8 @@ source /cvmfs/cms.cern.ch/cmsset_default.sh
 mkdir TrackingShortExercize
 cd TrackingShortExercize
 export TMPDIR=`pwd`
-cmsrel CMSSW_10_6_18
-cd CMSSW_10_6_18/src
+cmsrel CMSSW_14_0_19
+cd CMSSW_14_0_19/src
 cmsenv
 
 # we will work in the source directory all the time!

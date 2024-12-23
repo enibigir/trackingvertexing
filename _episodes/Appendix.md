@@ -155,7 +155,7 @@ c.SaveAs("pileup_nclusters.png")
 
 The dxy parameter is not simply a distance, it is a signed distance. A helical trajectory traces a circle in the plane transverse to the beamline, and the sign of dxy depends on whether the reference point is included inside of that circle our outside of it. You can change the reference point with which dxy is computed by passing a point or a beamspot as an argument:
 ~~~
-print track.dxy()
+print( track.dxy())
 ~~~
 {: .language-python}
 ~~~
@@ -163,7 +163,7 @@ print track.dxy()
 ~~~
 {: .output}
 ~~~
-print track.dxy(ROOT.math.XYZPoint(0, 0, 0))
+print( track.dxy(ROOT.math.XYZPoint(0, 0, 0)))
 ~~~
 {: .language-python}
 ~~~
@@ -171,7 +171,7 @@ print track.dxy(ROOT.math.XYZPoint(0, 0, 0))
 ~~~
 {: .output}
 ~~~
-print track.dxy(beamspot.product())
+print( track.dxy(beamspot.product()))
 ~~~
 {: .language-python}
 ~~~

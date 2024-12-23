@@ -39,7 +39,7 @@ The exact definitions are given in the `reco::TrackBase` [header file](https://g
 
 ## Accessing track variables
 
-Create `print.py` (for example `emacs -nw print.py`, or use your favorite text editor) in `TrackingShortExercize/`, then copy-paste the following code and run it (`python print.py`). Please note, if your `run321457_ZeroBias_AOD.root` is not in the directory you're working from, be sure to use the appropriate path in `line 2`.
+Create `print.py` (for example `emacs -nw print.py`, or use your favorite text editor) in `TrackingShortExercize/`, then copy-paste the following code and run it (`python3 print.py`). Please note, if your `run321457_ZeroBias_AOD.root` is not in the directory you're working from, be sure to use the appropriate path in `line 2`.
 ~~~
 import DataFormats.FWLite as fwlite
 events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2025/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
@@ -47,18 +47,18 @@ tracks = fwlite.Handle("std::vector<reco::Track>")
 
 for i, event in enumerate(events):
     if i >= 5: break # print info only about the first 5 events
-    print "Event", i
+    print( "Event", i)
     event.getByLabel("generalTracks", tracks)
     numTotal = tracks.product().size()
-    print "total tracks: ", numTotal
+    print( "total tracks: ", numTotal)
     for j, track in enumerate(tracks.product()):
         if j >= 5: break # print info only about the first 5 tracks
-        print "    Track", j,
-        print "\t charge/pT: %.3f" %(track.charge()/track.pt()),
-        print "\t phi: %.3f" %track.phi(),
-        print "\t eta: %.3f" %track.eta(),
-        print "\t dxy: %.4f" %track.dxy(),
-        print "\t dz: %.4f"  %track.dz()
+        print( "    Track", j, end = " ")
+        print( "\t charge/pT: %.3f" %(track.charge()/track.pt()), end = " ")
+        print( "\t phi: %.3f" %track.phi(), end = " ")
+        print( "\t eta: %.3f" %track.eta(), end = " ")
+        print( "\t dxy: %.4f" %track.dxy(), end = " ")
+        print( "\t dz: %.4f"  %track.dz())
 ~~~
 {: .language-python}
 to print all tracks comment out the line: `if j >= 5: break` as `# if j >= 5: break`
@@ -222,7 +222,7 @@ The event loop should be updated to this:
 ~~~
 for i, event in enumerate(events):
     if i >= 5: break            # only the first 5 events
-    print "Event", i
+    print( "Event", i)
     event.getByLabel("generalTracks", tracks)
     event.getByLabel("generalTracks", "MVAValues", MVAs)
 
@@ -238,21 +238,21 @@ for i, event in enumerate(events):
         if track.quality(track.qualityByName("highPurity")): numHighPurity += 1
 
         if j<50 or 55<j: continue
-        print "    Track", j,
-        print "\t charge/pT: %.3f" %(track.charge()/track.pt()),
-        print "\t phi: %.3f" %track.phi(),
-        print "\t eta: %.3f" %track.eta(),
-        print "\t dxy: %.4f" %track.dxy(),
-        print "\t dz: %.4f"  %track.dz(),
-        print "\t nHits: %s" %track.numberOfValidHits(), "(%s P+ %s S)"%(track.hitPattern().numberOfValidPixelHits(),track.hitPattern().numberOfValidStripHits()),
-        print "\t algo: %s"  %track.algoName(),
-        print "\t mva: %.3f" %mva
+        print( "    Track", j, end = " ")
+        print( "\t charge/pT: %.3f" %(track.charge()/track.pt()), end = " ")
+        print( "\t phi: %.3f" %track.phi(), end = " ")
+        print( "\t eta: %.3f" %track.eta(), end = " ")
+        print( "\t dxy: %.4f" %track.dxy(), end = " ")
+        print( "\t dz: %.4f"  %track.dz(), end = " ")
+        print( "\t nHits: %s" %track.numberOfValidHits(), "(%s P+ %s S)"%(track.hitPattern().numberOfValidPixelHits(),track.hitPattern().numberOfValidStripHits()), end = " ")
+        print( "\t algo: %s"  %track.algoName(), end = " ")
+        print( "\t mva: %.3f" %mva)
 
-    print "Event", i,
-    print "numTotal:", numTotal,
-    print "numLoose:", numLoose, "(%.1f %%)"%(float(numLoose)/numTotal*100),
-    print "numTight:", numTight, "(%.1f %%)"%(float(numTight)/numTotal*100),
-    print "numHighPurity:", numHighPurity, "(%.1f %%)"%(float(numHighPurity)/numTotal*100)
+    print( "Event", i, end = " ")
+    print( "numTotal:", numTotal, end = " ")
+    print( "numLoose:", numLoose, "(%.1f %%)"%(float(numLoose)/numTotal*100), end = " ")
+    print( "numTight:", numTight, "(%.1f %%)"%(float(numTight)/numTotal*100), end = " ")
+    print( "numHighPurity:", numHighPurity, "(%.1f %%)"%(float(numHighPurity)/numTotal*100))
 
 print("total events: ", dir(events))
 print("total events: ", type(events))

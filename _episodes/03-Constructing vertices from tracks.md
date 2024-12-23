@@ -120,10 +120,10 @@ secondaryVertices = fwlite.Handle("std::vector<reco::VertexCompositeCandidate>")
 
 events.toBegin()
 for i, event in enumerate(events):
-    print "Event:", i
+    print( "Event:", i)
     event.getByLabel("SecondaryVerticesFromLooseTracks", "Kshort", secondaryVertices)
     for j, vertex in enumerate(secondaryVertices.product()):
-        print "    Vertex:", j, vertex.vx(), vertex.vy(), vertex.vz()
+        print( "    Vertex:", j, vertex.vx(), vertex.vy(), vertex.vz())
     if i > 10: break
 ~~~
 {: .language-python}
@@ -241,7 +241,7 @@ The primary vertex reconstruction consists of three steps:
 > *	Clustering of the tracks that appear to originate from the same interaction vertex
 > *	Fitting for the position of each vertex using its associated tracks
 {: .checklist}
-All the primary vertices reconstructed in an event are saved in the `reco::Vertex` collection labeled `offlinePrimaryVertices`. Create the file `vertex.py` in `TrackingShortExercize/` which will load the original `run321167_ZeroBias_AOD.root` file and make a quarter-view plot of the vertex distribution (run it using `python vertex.py`):
+All the primary vertices reconstructed in an event are saved in the `reco::Vertex` collection labeled `offlinePrimaryVertices`. Create the file `vertex.py` in `TrackingShortExercize/` which will load the original `run321167_ZeroBias_AOD.root` file and make a quarter-view plot of the vertex distribution (run it using `python3 vertex.py`):
 ~~~
 import DataFormats.FWLite as fwlite
 import math
@@ -265,7 +265,7 @@ c.SaveAs("rho_z.png")
 ~~~
 {: .language-python}
 
-You should see a broad distribution in z, close to `rho = 0` (much closer than for the secondary vertices, see [appendix](https://CMSTrackingPOG.github.io/trackingvertexing/Appendix/index.html)). In fact, the distribution is about 0.1 cm wide and 4 cm long. The broad distribution in z is helpful: if 20 primary vertices are uniformly distributed along a 4 cm pencil-like region, we only need 2 mm vertex resolution to distinguish neighboring vertices. Fortunately, the CMS vertex resolution is better than this (better than 20μm and 25μm in x and z, respectively [TRK-11-001](http://inspirehep.net/record/1298029), [performances with the Phase1 pixel detector](https://twiki.cern.ch/twiki/bin/edit/CMS/CMSPublic.TrackingPOGPerformance2017MC#Vertex_Resolutions)), so they can be distinguished with high significance.
+You should see a broad distribution in z, close to `rho = 0` (much closer than for the secondary vertices, see [appendix](https://fnallpc.github.io/trackingvertexing/Appendix/index.html)). In fact, the distribution is about 0.1 cm wide and 4 cm long. The broad distribution in z is helpful: if 20 primary vertices are uniformly distributed along a 4 cm pencil-like region, we only need 2 mm vertex resolution to distinguish neighboring vertices. Fortunately, the CMS vertex resolution is better than this (better than 20μm and 25μm in x and z, respectively [TRK-11-001](http://inspirehep.net/record/1298029), [performances with the Phase1 pixel detector](https://twiki.cern.ch/twiki/bin/edit/CMS/CMSPublic.TrackingPOGPerformance2017MC#Vertex_Resolutions)), so they can be distinguished with high significance.
 
 To see this, you should modify properly the previous code to make a plot of the distance between primary vertices:
 ~~~
@@ -295,7 +295,7 @@ The broad distribution is due to the spread in primary vertex positions. Zoom in
 > events.toBegin()
 > for i, event in enumerate(events):
 >     event.getByLabel("offlinePrimaryVertices", primaryVertices)
->     print "Pile-up:", primaryVertices.product().size()
+>     print( "Pile-up:", primaryVertices.product().size())
 >     if i > 100: break
 > ~~~
 > {: .language-python}
@@ -303,8 +303,8 @@ The broad distribution is due to the spread in primary vertex positions. Zoom in
 **Print out the number of tracks in a single vertex object.** (Use the trick for vertex in `primaryVertices.product()`: break to obtain a primary vertex object.)
 > ## Solution
 > ~~~
-> print vertex.nTracks()
-> print vertex.tracksSize()
+> print( vertex.nTracks())
+> print( vertex.tracksSize())
 > ~~~
 > {: .language-python}
 > Why might they be different? ( See [tracksSize](https://cmssdt.cern.ch/dxr/CMSSW/source/DataFormats/VertexReco/interface/Vertex.h#94) vs [nTracks](https://cmssdt.cern.ch/dxr/CMSSW/source/DataFormats/VertexReco/interface/Vertex.h#170)).
@@ -363,7 +363,7 @@ for event in events:
     event.getByLabel("offlineBeamSpot", beamspot)
 
     if last_beamspot == None or last_beamspot != beamspot.product().x0():
-        print "New beamspot IOV (interval of validity)..."
+        print( "New beamspot IOV (interval of validity)...")
         last_beamspot       = beamspot.product().x0()
         sumx = 0.0
         N = 0
@@ -374,8 +374,8 @@ for event in events:
         sumx += vertex.x()
         vtx_xy.Fill(vertex.x(), vertex.y())
         if N % 1000 == 0:
-            print "Mean of primary vertices:", sumx/N,
-            print "Beamspot:", beamspot.product().x0()
+            print( "Mean of primary vertices:", sumx/N, end = " ")
+            print( "Beamspot:", beamspot.product().x0())
             
 c = ROOT.TCanvas( "c", "c", 1200, 800)
 vtx_xy.Draw("colz")
@@ -430,7 +430,7 @@ Add the analogous 2D plots for x versus z and y vs z positions.
 >     event.getByLabel("offlineBeamSpot", beamspot)
 > 
 >     if last_beamspot == None or last_beamspot != beamspot.product().x0():
->         print "New beamspot IOV (interval of validity)..."
+>         print( "New beamspot IOV (interval of validity)...")
 > 
 >         ## first save tgraph and then reset
 >         if (iIOV > 0):
@@ -525,8 +525,8 @@ cosAngle_zoom_histogram = ROOT.TH1F("cosAngle_zoom", "cosAngle_zoom", 100, 0.99,
 >             dy = secondary.vy() - primary.y()
 >             dz = secondary.vz() - primary.z()
 >             dl = math.sqrt(dx**2 + dy**2 + dz**2)
->             print "Normalized momentum:", px/p, py/p, pz/p,
->             print "Normalized displacement:", dx/dl, dy/dl, dz/dl
+>             print( "Normalized momentum:", px/p, py/p, pz/p, end = " ")
+>             print( "Normalized displacement:", dx/dl, dy/dl, dz/dl)
 >     if i > 20: break
 > ~~~
 > {: .language-python}
@@ -626,6 +626,6 @@ Finally, create K<sub>S</sub> mass histograms, with and without requiring `bestC
 > {: .language-python}
 {: .solution}
 
-**That's all!** The session is over, unless you would like to try some of the extra questions and arguments listed in the [Appendix](https://CMSTrackingPOG.github.io/trackingvertexing/Appendix/index.html)!
+**That's all!** The session is over, unless you would like to try some of the extra questions and arguments listed in the [Appendix](https://fnallpc.github.io/trackingvertexing/Appendix/index.html)!
 {% include links.md %}
 

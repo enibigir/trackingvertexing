@@ -26,7 +26,7 @@ tracks = fwlite.Handle("std::vector<reco::Track>")
 for i, event in enumerate(events):
     event.getByLabel("generalTracks", tracks)
     for track in tracks.product():
-        print track.pt(), track.p(), track.px(), track.py(), track.pz()
+        print( track.pt(), track.p(), track.px(), track.py(), track.pz())
     if i > 20: break
 ~~~
 {: .language-python}
@@ -48,8 +48,8 @@ Now we can investigate the kinematics of the tracks in our file. Assuming that t
 > for i, event in enumerate(events):
 >     event.getByLabel("generalTracks", tracks)
 >     for track in tracks.product():
->         print track.pt(), track.p(), track.px(), track.py(), track.pz()
->         print "energy: ", math.sqrt(0.140**2 + track.p()**2)
+>         print( track.pt(), track.p(), track.px(), track.py(), track.pz())
+>         print( "energy: ", math.sqrt(0.140**2 + track.p()**2))
 >     if i > 20: break
 > ~~~
 > {: .language-python}
@@ -81,10 +81,10 @@ Normally, one would access muons through the `reco::Muon` object since this cont
 events.toBegin()
 for i, event in enumerate(events):
     if i >= 15: break            # only the first 15 events
-    print "Event", i
+    print( "Event", i)
     event.getByLabel("globalMuons", tracks)
     for j, track in enumerate(tracks.product()):
-        print "    Track", j, track.charge()/track.pt(), track.phi(), track.eta(), track.dxy(), track.dz()
+        print( "    Track", j, track.charge()/track.pt(), track.phi(), track.eta(), track.dxy(), track.dz())
 ~~~
 {: .language-python}
 Run this code on the `run321167_Charmonium_AOD.root` file found here:

@@ -10,14 +10,14 @@ latitude: "41.842258"        # decimal latitude of workshop venue (use https://w
 longitude: "-88.245781"       # decimal longitude of the workshop venue (use https://www.latlong.net)
 humandate: "Synchronously January, 2023"    # human-readable dates for the workshop (e.g., "Feb 17-18, 2020")
 humantime: "24/7"    # human-readable times for the workshop (e.g., "9:00 am - 4:30 pm")
-startdate: 2024-01-08 # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
-enddate: 2024-01-12   # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
-email: ["daniel.spitzbart@cern.ch"]
+startdate: 2025-01-13 # machine-readable start date for the workshop in YYYY-MM-DD format like 2015-01-01
+enddate: 2025-01-17   # machine-readable end date for the workshop in YYYY-MM-DD format like 2015-01-02
+email: ["emery.nibigira@cern.ch"]
 ---
 
 ![CMS Detector Slice](https://cmsexperiment.web.cern.ch/sites/cmsexperiment.web.cern.ch/files/detectoroverview.gif){:width="50%"}
 
-## Welcome to the CMS Data Analysis School 2024 Tracking and Vertexing Short Exercise!
+## Welcome to the CMS Data Analysis School 2025 Tracking and Vertexing Short Exercise!
 
 We will present an introduction to using tracks for analyses in the era of **large pile-up** (many primary vertices). Our exercises will all use real data and will familiarize you with the following techniques:
 
@@ -29,7 +29,7 @@ We will present an introduction to using tracks for analyses in the era of **lar
 {: .checklist}
 
 > ## Prerequisites
-> **Before going any further, please complete the [CMS DAS Pre-Exercises](https://cern-cms-das-2023.github.io/cms-das-pre-exercises/) and then follow the instructions on the [setup page](setup.md).**
+> **Before going any further, please complete the [CMS DAS Pre-Exercises](https://fnallpc.github.io/cms-das-pre-exercises/) and then follow the instructions on the [setup page](setup.md).**
 {: .prereq}
 
 
@@ -58,7 +58,7 @@ We will present an introduction to using tracks for analyses in the era of **lar
 
 
 > ## Mattermost Chat
-> **The [Tracking and Vertexing Short Exercise](https://mattermost.web.cern.ch/cmsdaslpc2024/channels/shortextrackingvertexing) channel will be available once you join the [CMSDAS@LPC2024](https://mattermost.web.cern.ch/cmsdaslpc2024/channels/town-square) team. Direction for how to join this Mattermost chat team can be found on the <a href="setup.html">setup</a> page.**
+> **The [Tracking and Vertexing Short Exercise](https://mattermost.web.cern.ch/cmsdaslpc2025/channels/shortextrackingvertexing) channel will be available once you join the [CMSDAS@LPC2025](https://mattermost.web.cern.ch/cmsdaslpc2025/channels/town-square) team. Direction for how to join this Mattermost chat team can be found on the <a href="setup.html">setup</a> page.**
 {: .discussion}
 
 > ## CERN Twiki and Introduction Slides

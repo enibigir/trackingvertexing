@@ -11,7 +11,7 @@
 carpentry: "swc"
 
 # Overall title for pages.
-title: "CMS DAS 2024 Tracking and Vertexing Short Exercise"
+title: "CMS DAS 2025 Tracking and Vertexing Short Exercise"
 
 # Life cycle stage of the lesson
 # See this page for more details: https://cdh.carpentries.org/the-lesson-life-cycle.html
@@ -47,7 +47,7 @@ kind: "lesson"
 repository: <USERNAME>/<PROJECT>
 
 # Email address, no mailto:
-email: "daniel.spitzbart@cern.ch"
+email: "emery.nibigira@cern.ch"
 
 
 # Sites.

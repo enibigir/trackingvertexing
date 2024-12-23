@@ -20,7 +20,7 @@ import DataFormats.FWLite as fwlite
 import ROOT
 import math
 
-events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2024/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
+events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2025/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 tracks = fwlite.Handle("std::vector<reco::Track>")
 
 for i, event in enumerate(events):
@@ -42,7 +42,7 @@ Now we can investigate the kinematics of the tracks in our file. Assuming that t
 > import ROOT
 > import math
 > 
-> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2024/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
+> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2025/short_exercises/trackingvertexing/run321167_ZeroBias_AOD.root")
 > tracks = fwlite.Handle("std::vector<reco::Track>")
 > 
 > for i, event in enumerate(events):
@@ -89,7 +89,7 @@ for i, event in enumerate(events):
 {: .language-python}
 Run this code on the `run321167_Charmonium_AOD.root` file found here:
 ~~~
-root://cmseos.fnal.gov//store/user/cmsdas/2024/short_exercises/trackingvertexing/run321167_Charmonium_AOD.root
+root://cmseos.fnal.gov//store/user/cmsdas/2025/short_exercises/trackingvertexing/run321167_Charmonium_AOD.root
 ~~~
 {: .language-bash}
 Notice how few muon tracks there are compared to the same code executed for `generalTracks`. In fact, you only see as many muons as you do because this data sample was collected with a muon trigger. (The muon definition in the trigger is looser than the `globalMuons` algorithm, which is why there are some events with fewer than two `globalMuons`.)
@@ -107,7 +107,7 @@ See in the `Appendix` an application for the Muon and Tracks objects usage in th
 > import os
 > ROOT.gROOT.SetBatch(True)
 > 
-> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2024/short_exercises/trackingvertexing/run321167_Charmonium_AOD.root")
+> events = fwlite.Events("root://cmseos.fnal.gov//store/user/cmsdas/2025/short_exercises/trackingvertexing/run321167_Charmonium_AOD.root")
 > tracks = fwlite.Handle("std::vector<reco::Track>")
 > mass_histogram = ROOT.TH1F("mass", "mass", 100, 0.0, 5.0)
 > 

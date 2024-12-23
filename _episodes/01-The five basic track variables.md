@@ -470,10 +470,10 @@ The C++-equivalent is hidden below.
 > >
 > > The following examples may help guide you to the right command (replace items surrounded by `< >`):
 > > ~~~bash
-> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:<absolute-path-to-cmslpc-directory>" ./ 
+> > scp -rp "<lpc-username>@cmslpc-el8.fnal.gov:<absolute-path-to-cmslpc-directory>" ./ 
 > > scp -rp "<cmslpc-ssh-hostname>:<absolute-path-to-cmslpc-directory>" ./ 
-> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:/uscms/homes/<first-letter-of-lpc-username>/<lpc-username>/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
-> > scp -rp "$USER@cmslpc-sl7.fnal.gov:/uscms/homes/${USER:0:1}/${USER}/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > scp -rp "<lpc-username>@cmslpc-el8.fnal.gov:/uscms/homes/<first-letter-of-lpc-username>/<lpc-username>/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > scp -rp "$USER@cmslpc-el8.fnal.gov:/uscms/homes/${USER:0:1}/${USER}/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
 > > ~~~
 > > 
 > > When you have time `rsync` is worth learning about.
@@ -690,10 +690,10 @@ Consider that the `packedPFCandidates` collects both **charged** and **neutral c
 > >
 > > The following examples may help guide you to the right command (replace items surrounded by `< >`):
 > > ~~~bash
-> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:<absolute-path-to-cmslpc-directory>" ./ 
+> > scp -rp "<lpc-username>@cmslpc-el8.fnal.gov:<absolute-path-to-cmslpc-directory>" ./ 
 > > scp -rp "<cmslpc-ssh-hostname>:<absolute-path-to-cmslpc-directory>" ./ 
-> > scp -rp "<lpc-username>@cmslpc-sl7.fnal.gov:/uscms/homes/<first-letter-of-lpc-username>/<lpc-username>/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
-> > scp -rp "$USER@cmslpc-sl7.fnal.gov:/uscms/homes/${USER:0:1}/${USER}/nobackup/CMSSW_10_6_30_patch1_cmsdas/src/TrackingShortExercize/plots/highP" ./ 
+> > scp -rp "<lpc-username>@cmslpc-el8.fnal.gov:/uscms/homes/<first-letter-of-lpc-username>/<lpc-username>/nobackup/CMSSW_14_0_19/src/TrackingShortExercize/plots/highP" ./ 
+> > scp -rp "$USER@cmslpc-el8.fnal.gov:/uscms/homes/${USER:0:1}/${USER}/nobackup/CMSSW_14_0_19/src/TrackingShortExercize/plots/highP" ./ 
 > > ~~~
 > > 
 > > When you have time `rsync` is worth learning about.

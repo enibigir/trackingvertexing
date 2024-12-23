@@ -79,19 +79,17 @@ The first three lines load the `FWLite` framework, the `.root` data file, and pr
 > 
 > > ### output of the tree command
 > > ~~~output
-> > PrintOutTracks
-> > |-- plugins
+> > PrintOutTracks/
+> > |-- plugins/
 > > |   |-- BuildFile.xml
 > > |   `-- PrintOutTracks.cc
 > > |-- python
-> > |   |-- __init__.py
-> > |   `-- __init__.pyc
 > > `-- test
-> >     |-- BuildFile.xml
 > >     |-- test_catch2_PrintOutTracks.cc
-> >     `-- test_catch2_main.cc
+> >     |-- test_catch2_main.cc
+> >     `-- BuildFile.xml
 > > 
-> > 3 directories, 7 files
+> > Total: 3 directories, 5 files
 > > ~~~
 > {: .solution2}
 >

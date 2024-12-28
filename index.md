@@ -34,10 +34,11 @@ We will present an introduction to using tracks for analyses in the era of **lar
 
 
 > ## Facilitators
-> * [Daniel Spitzbart*](https://twiki.cern.ch/twiki/bin/view/Main/DanielSpitzbart), Boston University ([daniel.spitzbart@cern.ch](mailto:daniel.spitzbart@cern.ch))
-> * [Aidan Grummer](https://twiki.cern.ch/twiki/bin/view/Main/Aidan Grummer), Fermilab ([aidan.gummer@cern.ch](mailto:aidan.grummer@cern.ch))
+> #### Lead Contact
+> * [Emery Nibigira](#facilitators), University of Tennessee ([emery.nibigira@cern.ch](mailto:emery.nibigira@cern.ch))
+> * [Leonardo Giannini](#facilitators), UCSD ([leonardo.giannini@cern.ch](mailto:leonardo.giannini@cern.ch))
 >  
-> *Lead Contact
+> #### All Facilitators
 > <table>
 >   <tr>
 >     <td align="center"><a href="https://github.com/danbarto"><img src="https://lpc.fnal.gov//CMSDAS2024/Daniel_Spitzbart.png" width="100px;" alt=""/><br /><sub><b>Daniel Spitzbart</b></sub></a><br /><a href="https://danbarto.github.io" title="More about him">🖋</a></td>

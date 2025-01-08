@@ -17,7 +17,7 @@ title: Setup
 {: .prereq}
 
 > ## Important
-> **This exercise is designed to run only on lxplus as copies of the scripts are present there.**
+> **This exercise is designed to run only on the LPC clusters as copies of the scripts are present there.**
 {: .callout}
 ## Logging in
 Keep in mind your `<USERNAME>` and use it in the following instructions:

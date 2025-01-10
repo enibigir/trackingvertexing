@@ -47,7 +47,7 @@ We will present an introduction to using tracks for analyses in the era of **lar
 >   </tr>
 >   <tr>
 >     <td align="center"><a href=""><img src="https://lpc.fnal.gov//CMSDAS2025/Hichem_Bouchamaoui.jpg" width="100px;" alt=""/><br /><sub><b>Hichem Bouchamaoui</b></sub></a><br /><a href="" title="More about Hichem">🖋</a></td>
->     <td align="center"><a href=""><img src="https://lpc.fnal.gov//CMSDAS2025/Ray_Wynne.jpg" width="100px;" alt=""/><br /><sub><b>Ray Wynne</b></sub></a><br /><a href="" title="More about Ray">🖋</a></td>
+>     <td align="center"><a href=""><img src="https://lpc.fnal.gov//CMSDAS2025/Raymond_Wynne.jpg" width="100px;" alt=""/><br /><sub><b>Ray Wynne</b></sub></a><br /><a href="" title="More about Ray">🖋</a></td>
 >     <td align="center"><a href="https://github.com/akgrummer"><img src="https://lpc.fnal.gov//CMSDAS2025/Aidan_Grummer.jpg" width="100px;" alt=""/><br /><sub><b>Aidan Grummer</b></sub></a><br /><a href="https://github.com/akgrummer" title="More about Aidan">🖋</a></td>
 >   </tr>
 > </table>

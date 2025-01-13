@@ -56,14 +56,14 @@ We will present an introduction to using tracks for analyses in the era of **lar
 > **The [Tracking and Vertexing Short Exercise](https://mattermost.web.cern.ch/cmsdaslpc2025/channels/shortextrackingvertexing) channel will be available once you join the [CMSDAS@LPC2025](https://mattermost.web.cern.ch/cmsdaslpc2025/channels/town-square) team. Direction for how to join this Mattermost chat team can be found on the <a href="setup.html">setup</a> page.**
 {: .discussion}
 
-> ## CERN Twiki and Introduction Slides
-> **The CERN TWiki of this short exercise can be found at [this link](https://twiki.cern.ch/twiki/bin/view/CMS/SWGuideCMSDataAnalysisSchoolCERN2023TrackingVertexingShortExercise). At the beginning of this short exercise an introduction will be done based on [these slides](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/CMSTrackingPOG/trackingvertexing/gh-pages/files/CMSDASCERN2023_TrackingVertexingExercise_Introduction.pdf).**
+> ## Introduction Slides
+> **At the beginning of this short exercise an introduction will be done based on <a href="files/CMSDASCERN2023_TrackingVertexingExercise_Introduction.pdf">these slides</a>.**
 {: .callout}
 {% comment %} This is a comment in Liquid {% endcomment %}
 
-> ## Close-out Slides
+<!-- > ## Close-out Slides
 > **You can find a guideline closeup for the Tracking and Vertexing Short Exercise questions and results on [these slides](https://docs.google.com/viewer?url=https://raw.githubusercontent.com/CMSTrackingPOG/trackingvertexing/gh-pages/files/CMSDASCERN2023_TrackingVertexingExercise_Wrapup.pdf).**
 {: .challenge}
-{% comment %} This is a comment in Liquid {% endcomment %}
+{% comment %} This is a comment in Liquid {% endcomment %} -->
 
 {% include links.md %}
